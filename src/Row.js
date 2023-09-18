@@ -1,8 +1,8 @@
-import movieTrailer from "movie-trailer";
 import React, { useEffect, useState } from "react";
-import YouTube from "react-youtube";
 import axios from "./axios";
 import "./Row.css";
+import YouTube from "react-youtube";
+import movieTrailer from "movie-trailer";
 
 
 const base_url = "https://image.tmdb.org/t/p/original/"
@@ -37,8 +37,8 @@ function Row({title, fetchUrl, isLargeRow}) {
         }else {
             movieTrailer(movie?.name || "")
             .then(url=>{
-                const urlParams = new URLSearchParams(URL(url).search);
-                setTrailerUrl(urlParams.get('v'));
+                const urlParams = new URLSearchParams(new URL(url).search);
+                setTrailerUrl(urlParams.get("v"));
             })
             .catch((error) => console.log(error));
         }   
@@ -63,7 +63,7 @@ function Row({title, fetchUrl, isLargeRow}) {
                     />
                 })}
             </div>
-            <YouTube videoId="nIUYYVn8f9o" opts={opts}/>
+            {trailerUrl &&<YouTube videoId={trailerUrl} opts={opts}/>}
         </div>
      );
 }
